@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import pygame
 from pygame.locals import *
 from pydub import AudioSegment
@@ -12,8 +13,14 @@ pygame.font.init()
 width, height = 64*10, 64*8
 screen = pygame.display.set_mode((width, height))
 # infinite loop
+path = 'OLDRADIOSHOWS'
 
-file1 = "OLDRADIOSHOWS/Abbott_&_Costello_42-10-15_Bank_Robbery.mp3"
+files = os.listdir(path)
+directory = "OLDRADIOSHOWS/"
+for f in files:
+    print(f)
+
+file1 = files[1]
 
 
 while True:
@@ -27,8 +34,9 @@ while True:
             exit(0)
         if event.type == pygame.KEYDOWN:
             if event.key == K_1:
-                song = AudioSegment.from_mp3(file1)
+                song = AudioSegment.from_mp3(directory+files[0])
                 play(song)
+                print(files[0]+"playing")
             elif event.key == K_ESCAPE:
                 pygame.quit()
                 exit(0)
