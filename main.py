@@ -2,9 +2,8 @@
 
 import os
 import pygame
+import vlc
 from pygame.locals import *
-from pydub import AudioSegment
-from pydub.playback import play
 
 # initialize pygame for the test key presses
 pygame.init()
@@ -16,13 +15,13 @@ screen = pygame.display.set_mode((width, height))
 path = 'OLDRADIOSHOWS'
 
 files = os.listdir(path)
-directory = "OLDRADIOSHOWS/"
+# directory = "OLDRADIOSHOWS/"
+files.sort(key=lambda x: x.split(".")[1])
 for f in files:
     print(f)
-
-file1 = files[1]
-
-
+file1 = files[0]
+player = vlc.MediaPlayer('OLDRADIOSHOWS/'+file1)
+value = vlc.MediaPlayer().is_playing()
 while True:
 
     pressed_keys = pygame.key.get_pressed()
@@ -34,10 +33,25 @@ while True:
             exit(0)
         if event.type == pygame.KEYDOWN:
             if event.key == K_1:
-                song = AudioSegment.from_mp3(directory+files[0])
-                play(song)
-                print(files[0]+"playing")
+
+                if player != vlc.MediaPlayer('OLDRADIOSHOWS/'+file1):
+                    player.stop()
+                    player = vlc.MediaPlayer('OLDRADIOSHOWS/'+file1)
+                    print("stopping and starting 1")
+                    player.play()
+
+                # if player == vlc.MediaPlayer('OLDRADIOSHOWS/'+file1) and value == True:
+                #     player.pause()
+                #     print("pause 1")
+                # else:
+                #     player.play()
+                #     print(file1+"playing")
+                else:
+                    player.pause()
+                    print("pause 1")
+
             elif event.key == K_ESCAPE:
+                player.stop
                 pygame.quit()
                 exit(0)
 
