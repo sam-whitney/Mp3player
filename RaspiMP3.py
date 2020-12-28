@@ -1,45 +1,73 @@
 #!/usr/bin/env python
 
 import os
-import pygame
 import vlc
-from pygame.locals import *
+from gpiozero import Button
+from time import sleep
+
 
 # initialize pygame for the test key presses
-pygame.init()
-pygame.font.init()
+# pygame.init()
+# pygame.font.init()
 
-width, height = 64*10, 64*8
-screen = pygame.display.set_mode((width, height))
+# width, height = 64*10, 64*8
+# screen = pygame.display.set_mode((width, height))
 
-
-path = 'OLDRADIOSHOWS'
-
+# import files from folder
+path = '/media/pi/AVO/radioshows'
 files = os.listdir(path)
-states = [False, False, False, False, False,
-         False, False, False, False, False,
-        ]
+
+# sort files into the right order
 files.sort(key=lambda x: x.split(".")[1])
 for file in files:
     print(file)
 
+filetriggers = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+
+# Define Button variables for the GPIO pins
+button1 = Button(8)
+button2 = Button(9)
+button3 = Button(10)
+button4 = Button(11)
+button5 = Button(12)
+button6 = Button(13)
+button7 = Button(14)
+button8 = Button(15)
+button9 = Button(16)
+button10 = Button(17)
+button11 = Button(18)
+button12 = Button(19)
+button13 = Button(20)
+button14 = Button(21)
+button15 = Button(22)
+button16 = Button(23)
+button17 = Button(24)
+button18 = Button(25)
+button19 = Button(26)
+button20 = Button(27)
+
+state1 = False
+state2 = False
+
+# Other variables for playback
 player = vlc.MediaPlayer()
 playing = 0
 pause = False
 
 
+# Playback functions
 def playfile(number):
     global playing
     global pause
-    media = 'OLDRADIOSHOWS/'+files[number-1]
+    media = '/media/pi/AVO/radioshows/'+files[number-1]
 
-    if pause is True:
+    if pause is True and playing == number:
         player.set_pause(0)
         print("resume:")
         pause = False
         return
 
-    if playing == number:
+    elif playing == number:
         player.set_pause(1)
         print("paused:")
         pause = True
@@ -54,60 +82,70 @@ def playfile(number):
     print(playing)
     return playing
 
-
 while True:
-
-    pressed_keys = pygame.key.get_pressed()
-    for event in pygame.event.get():
-        # check if the event is the X button
-        if event.type == pygame.QUIT:
-            # if it is quit the game
-            pygame.quit()
-            exit(0)
-
-        if event.type == pygame.KEYDOWN:
-
-            if event.key == K_1:
-                playfile(1)
-            elif event.key == K_2:
-                playfile(2)
-            elif event.key == K_3:
-                playfile(3)
-            elif event.key == K_4:
-                playfile(4)
-            elif event.key == K_5:
-                playfile(5)
-            elif event.key == K_6:
-                playfile(6)
-            elif event.key == K_7:
-                playfile(7)
-            elif event.key == K_8:
-                playfile(8)
-            elif event.key == K_6:
-                playfile(6)
-            elif event.key == K_7:
-                playfile(7)
-            elif event.key == K_8:
-                playfile(8)
-
-
-            #     player.set_pause(0)
-            #     player.set_media(vlc.Media('OLDRADIOSHOWS/'+files[0]))
-            #     player.play()
-            #     states[0] is True
-            #     return states
-            #
-            #     print("1")
-            # elif event.key == K_2:
-            #     player.set_pause(0)
-            #     player.set_media(vlc.Media('OLDRADIOSHOWS/'+files[1]))
-            #     print("2")
-            # elif event.key == K_3:
-            #     print(states)
-
-            if event.key == K_ESCAPE:
-                player.stop
-                pygame.quit()
-                exit(0)
-
+    
+    
+    
+    if button1.is_pressed:
+        playfile(1)
+        sleep(0.5)
+    elif button12.is_pressed:
+        playfile(2)
+        sleep(0.5)
+    elif button3.is_pressed:
+        playfile(3)
+        sleep(0.5)
+    elif button4.is_pressed:
+        playfile(4)
+        sleep(0.5)
+    elif button5.is_pressed:
+        playfile(5)
+        sleep(0.5)
+    elif button6.is_pressed:
+        playfile(6)
+        sleep(0.5)
+    elif button7.is_pressed:
+        playfile(7)
+        sleep(0.5)
+    elif button8.is_pressed:
+        playfile(8)
+        sleep(0.5)
+    elif button9.is_pressed:
+        playfile(9)
+        sleep(0.5)
+    elif button10.is_pressed:
+        playfile(10)
+        sleep(0.5)
+    elif button11.is_pressed:
+        playfile(11)
+        sleep(0.5)
+    elif button12.is_pressed:
+        playfile(12)
+        sleep(0.5)
+    elif button13.is_pressed:
+        playfile(13)
+        sleep(0.5)
+    elif button14.is_pressed:
+        playfile(14)
+        sleep(0.5)
+    elif button15.is_pressed:
+        playfile(15)
+        sleep(0.5)
+    elif button16.is_pressed:
+        playfile(16)
+        sleep(0.5)
+    elif button17.is_pressed:
+        playfile(17)
+        sleep(0.5)
+    elif button18.is_pressed:
+        playfile(18)
+        sleep(0.5)
+    elif button19.is_pressed:
+        playfile(19)
+        sleep(0.5)
+    elif button20.is_pressed:
+        playfile(20)
+        sleep(0.5)
         break
+
+    
