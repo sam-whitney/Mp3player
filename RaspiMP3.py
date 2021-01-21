@@ -14,7 +14,7 @@ from time import sleep
 # screen = pygame.display.set_mode((width, height))
 
 # import files from folder
-path = '/media/pi/AVO/radioshows'
+path = '/media/pi/MP3USB/radioshows'
 files = os.listdir(path)
 
 # sort files into the right order
@@ -53,13 +53,15 @@ state2 = False
 player = vlc.MediaPlayer()
 playing = 0
 pause = False
-
+stop = False
 
 # Playback functions
+
+# Play file
 def playfile(number):
     global playing
     global pause
-    media = '/media/pi/AVO/radioshows/'+files[number-1]
+    media = '/media/pi/MP3USB/radioshows/'+files[number-1]
 
     if pause is True and playing == number:
         player.set_pause(0)
@@ -82,6 +84,31 @@ def playfile(number):
     print(playing)
     return playing
 
+def resumeplaying():
+    if pause is True :
+        player.set_pause(0)
+        print("resume:")
+        print(playing)
+        pause = False
+        return
+
+    else:
+        return
+def pausefile():
+    if pause is False:
+        player.set_pause(1)
+        print("paused")
+        pause = True
+        return
+    else: 
+        return
+def volumeup():
+    print("Volume Up")
+    return
+
+def volumedown():
+    print("Volume Down")
+    return
 while True:
     
     
@@ -135,17 +162,18 @@ while True:
         playfile(16)
         sleep(0.5)
     elif button17.is_pressed:
-        playfile(17)
+        resumeplaying()
         sleep(0.5)
     elif button18.is_pressed:
-        playfile(18)
+        pausefile()
         sleep(0.5)
     elif button19.is_pressed:
-        playfile(19)
+        volumedown()
         sleep(0.5)
     elif button20.is_pressed:
-        playfile(20)
+        volumeup()
         sleep(0.5)
+    elif stop == True:
         break
 
     
